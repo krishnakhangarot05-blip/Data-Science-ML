@@ -1,87 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Customer Satisfaction Predictor</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        header {
-            background: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: #f8f9fa;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        nav a:hover {
-            color: #45a049;
-        }
-        .content {
-            padding: 30px;
-        }
-        h1 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-        p {
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        a {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        a:hover {
-            background: #45a049;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Laptop Price Predictor</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* NAVBAR */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+}
+
+nav h2{
+    color:white;
+    font-weight:600;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:30px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd700;
+}
+
+/* MAIN SECTION */
+.container{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+.card{
+    background: rgba(255,255,255,0.1);
+    padding:50px;
+    border-radius:20px;
+    backdrop-filter: blur(20px);
+    color:white;
+    max-width:900px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    animation:fadeIn 1.2s ease-in-out;
+}
+
+.card h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-weight:700;
+}
+
+.card p{
+    line-height:1.8;
+    font-size:16px;
+    text-align:justify;
+    margin-bottom:15px;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:15px;
+    background: rgba(0,0,0,0.3);
+    color:white;
+    font-size:14px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .card{
+        padding:30px;
+    }
+    nav{
+        padding:15px 20px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>ℹ️ About Us</h1>
-        </header>
-        <nav>
-            <a href="/">Home</a> |
-            <a href="/about">About</a> |
-            <a href="/content">Content</a> |
-            <a href="/project">Project</a> |
-            <a href="/history">History</a>
-        </nav>
-        <div class="content">
-            <p>This application predicts flight distance based on customer satisfaction data from airline passengers. It uses machine learning to analyze various factors that influence customer experience and flight details.</p>
-            <p>Our goal is to provide insights into customer behavior and help airlines improve their services.</p>
-            <a href="/">Back to Home</a>
-        </div>
+
+<nav>
+    <h2>💻 Laptop Predictor</h2>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/project">Predict</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h1>About Laptop Price Predictor</h1>
+
+        <p>
+        The Laptop Price Predictor is a machine learning-powered web application designed
+        to estimate the market price of laptops based on their hardware specifications
+        and user feedback data. The system evaluates important features such as brand,
+        processor type, RAM, storage configuration, operating system, warranty, and ratings.
+        </p>
+
+        <p>
+        Using regression-based machine learning algorithms trained on real laptop datasets,
+        the model learns pricing patterns and predicts accurate laptop prices instantly.
+        This helps users understand the approximate value of a laptop before purchasing
+        or comparing different configurations.
+        </p>
+
+        <p>
+        Our objective is to provide a fast, intelligent, and user-friendly platform that
+        simplifies laptop price estimation through data-driven insights. The application
+        demonstrates how machine learning can support smarter technology purchasing
+        decisions and market analysis.
+        </p>
+
     </div>
+</div>
+
+<footer>
+    © 2026 Laptop Price Prediction System | Machine Learning Project 💻
+</footer>
+
 </body>
 </html>
