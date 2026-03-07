@@ -1,73 +1,39 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, render_template
 import joblib
 import numpy as np
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
 
 app = Flask(__name__)
 
-# Load the trained model
-try:
-    model = joblib.load('house_price_predict')
-except FileNotFoundError:
-    model = None
+# Load the model
+model = joblib.load('cost-predictor')
 
-# Feature information
-FEATURES = {
-    'CRIM': {'label': 'Crime Rate', 'min': 0, 'max': 100, 'step': 0.01},
-    'ZN': {'label': 'Zoning - Residential %', 'min': 0, 'max': 100, 'step': 1},
-    'INDUS': {'label': 'Industrial %', 'min': 0, 'max': 30, 'step': 0.1},
-    'CHAS': {'label': 'Charles River (1=Yes, 0=No)', 'min': 0, 'max': 1, 'step': 1},
-    'NOX': {'label': 'Nitric Oxide Concentration', 'min': 0.3, 'max': 0.9, 'step': 0.01},
-    'RM': {'label': 'Avg Rooms per Dwelling', 'min': 3, 'max': 9, 'step': 0.1},
-    'AGE': {'label': 'Age of House (%)', 'min': 1, 'max': 150, 'step': 1},
-    'DIS': {'label': 'Distance to Job Centers', 'min': 1, 'max': 15, 'step': 0.1},
-    'RAD': {'label': 'Accessibility to Highways', 'min': 1, 'max': 24, 'step': 1},
-    'TAX': {'label': 'Property Tax Rate', 'min': 100, 'max': 800, 'step': 1},
-    'PTRATIO': {'label': 'Pupil-Teacher Ratio', 'min': 10, 'max': 25, 'step': 0.1},
-    'LSTAT': {'label': 'Lower Status Population %', 'min': 0, 'max': 40, 'step': 0.1}
-}
+# Mappings
+gender_dict = {'female': 0, 'male': 1}
+region_dict = {'southwest': 1, 'southeast': 2, 'northwest': 3, 'northeast': 4}
 
 @app.route('/')
-def index():
-    return render_template('index.html', features=FEATURES)
+def home():
+    return render_template('index.html')
 
-@app.route('/api/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    if model is None:
-        return jsonify({'error': 'Model not loaded'}), 500
+    # Get form data
+    age = float(request.form['age'])
+    gender = request.form['gender']
+    bmi = float(request.form['bmi'])
+    region = request.form['region']
     
-    try:
-        data = request.json
-        
-        # Extract features in the correct order
-        features_list = []
-        for feature_name in FEATURES.keys():
-            value = float(data.get(feature_name, 0))
-            features_list.append(value)
-        
-        # Convert to numpy array and reshape
-        X = np.array(features_list).reshape(1, -1)
-        
-        # Make prediction
-        prediction = model.predict(X)[0]
-        
-        # Return prediction (multiply by 1000 since MEDV is in $1000s)
-        price = round(prediction * 1000, 2)
-        
-        return jsonify({
-            'success': True,
-            'prediction': prediction,
-            'price': f'${price:,.2f}',
-            'price_raw': price
-        })
+    # Convert to numbers
+    gender_num = gender_dict[gender]
+    region_num = region_dict[region]
     
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 400
-
-@app.route('/api/features', methods=['GET'])
-def get_features():
-    return jsonify(FEATURES)
+    # Prepare input
+    features = np.array([[age, gender_num, bmi, region_num]])
+    
+    # Predict
+    prediction = model.predict(features)[0]
+    
+    return render_template('index.html', prediction=round(prediction, 2))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True)
